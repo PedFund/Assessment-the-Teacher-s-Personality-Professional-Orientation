@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher's Personality Professional Direction Assessment</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Teacher's Personality Professional Direction Assessment</h1>
+            <p class="subtitle">E.I. Rogov Method</p>
+        </header>
+
+        <div id="intro" class="section">
+            <div class="instructions">
+                <h2>Instructions</h2>
+                <p>This questionnaire lists properties that may be more or less inherent to you. For each statement, choose one of two possible answers:</p>
+                <ul>
+                    <li><strong>True</strong> - the property described is typical of your behavior or is more inherent to you</li>
+                    <li><strong>False</strong> - the property described is not typical of your behavior or is inherent to you to a minimum</li>
+                </ul>
+                <button id="startBtn" class="btn-primary">Start Assessment</button>
+            </div>
+        </div>
+
+        <div id="questionnaire" class="section hidden">
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+            <p class="progress-text">Question <span id="currentQ">1</span> of 50</p>
+
+            <div class="question-card">
+                <p id="questionText" class="question-text"></p>
+                <div class="answer-buttons">
+                    <button class="btn-answer" data-answer="true">True</button>
+                    <button class="btn-answer" data-answer="false">False</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="results" class="section hidden">
+            <h2>Your Results</h2>
+            
+            <div id="reliabilityWarning" class="warning hidden">
+                <strong>⚠️ Attention:</strong> The results may be unreliable due to excessive tendency to present yourself favorably (high motivation of approval score).
+            </div>
+
+            <div class="chart-container">
+                <canvas id="profileChart"></canvas>
+            </div>
+
+            <div id="scores" class="scores-grid"></div>
+
+            <div id="dominantProfile" class="dominant-profile"></div>
+
+            <div id="detailedDescriptions" class="detailed-descriptions"></div>
+
+            <button id="restartBtn" class="btn-primary">Take Test Again</button>
+        </div>
+    </div>
+
+    <script src="questions.js"></script>
+    <script src="app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>
