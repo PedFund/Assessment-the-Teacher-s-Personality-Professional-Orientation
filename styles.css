@@ -311,6 +311,40 @@ header h1 {
     .question-text {
         font-size: 1.1em;
     }
+/* ===== MOBILE CLICK FIX ===== */
+
+/* скрытые секции не должны ловить клики */
+.hidden {
+  display: none !important;
+}
+
+/* основной контейнер */
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+/* секции */
+.section {
+  position: relative;
+  z-index: 2;
+}
+
+/* карточка вопроса */
+.question-card {
+  position: relative;
+  z-index: 3;
+}
+
+/* КНОПКИ — ВЫШЕ ВСЕГО */
+button,
+.btn-primary,
+.btn-answer {
+  position: relative !important;
+  z-index: 999 !important;
+  pointer-events: auto !important;
+  touch-action: manipulation;
+}
 
     .answer-buttons {
         flex-direction: column;
