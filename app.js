@@ -1,120 +1,35 @@
-let currentQuestion = 0;
-let answers = [];
+// === DIAGNOSTIC VERSION ===
+// This file MUST show the first question.
+// If it doesn't – app.js is NOT executed at all.
 
-// DOM elements
-const introSection = document.getElementById('intro');
-const questionnaireSection = document.getElementById('questionnaire');
-const resultsSection = document.getElementById('results');
+document.addEventListener('DOMContentLoaded', () => {
+    alert('app.js loaded');
 
-const startBtn = document.getElementById('startBtn');
-const restartBtn = document.getElementById('restartBtn');
+    const intro = document.getElementById('intro');
+    const questionnaire = document.getElementById('questionnaire');
+    const startBtn = document.getElementById('startBtn');
+    const questionText = document.getElementById('questionText');
+    const currentQ = document.getElementById('currentQ');
 
-const questionText = document.getElementById('questionText');
-const currentQSpan = document.getElementById('currentQ');
-const progressFill = document.getElementById('progressFill');
-const answerButtons = document.querySelectorAll('.btn-answer');
+    if (!startBtn || !questionText) {
+        alert('DOM elements not found');
+        return;
+    }
 
-// --- START ---
-startBtn.addEventListener('click', startTest);
-restartBtn.addEventListener('click', restartTest);
+    startBtn.addEventListener('click', () => {
+        alert('Start clicked');
 
-answerButtons.forEach(btn => {
-  btn.addEventListener('click', e => {
-    const value = e.target.dataset.answer === 'true';
-    handleAnswer(value);
-  });
-});
+        if (!window.questions || !questions.length) {
+            alert('Questions NOT loaded');
+            return;
+        }
 
-function startTest() {
-  if (!Array.isArray(questions) || questions.length === 0) {
-    alert('Questions are not loaded.');
-    return;
-  }
+        intro.classList.add('hidden');
+        questionnaire.classList.remove('hidden');
 
-  currentQuestion = 0;
-  answers = [];
+        questionText.textContent = questions[0];
+        currentQ.textContent = '1';
 
-  introSection.classList.add('hidden');
-  questionnaireSection.classList.remove('hidden');
-
-  showQuestion();
-}
-
-function showQuestion() {
-  if (currentQuestion >= questions.length) {
-    showResults();
-    return;
-  }
-
-  const q = questions[currentQuestion];
-
-  // поддержка строк и объектов
-  if (typeof q === 'string') {
-    questionText.textContent = q;
-  } else if (q && typeof q === 'object' && q.text) {
-    questionText.textContent = q.text;
-  } else {
-    questionText.textContent = 'Invalid question format';
-  }
-
-  currentQSpan.textContent = currentQuestion + 1;
-  updateProgress();
-}
-
-function handleAnswer(answer) {
-  answers[currentQuestion] = answer;
-  currentQuestion++;
-  showQuestion();
-}
-
-function updateProgress() {
-  const percent = ((currentQuestion + 1) / questions.length) * 100;
-  progressFill.style.width = percent + '%';
-}
-
-// --- RESULTS ---
-function calculateScores() {
-  const scores = {
-    sociability: 0,
-    organization: 0,
-    focusOnSubject: 0,
-    intelligence: 0,
-    motivationOfApproval: 0
-  };
-
-  Object.keys(answerKey).forEach(scale => {
-    Object.keys(answerKey[scale]).forEach(qNum => {
-      const index = parseInt(qNum, 10) - 1;
-      if (answers[index] === answerKey[scale][qNum]) {
-        scores[scale]++;
-      }
+        alert('First question rendered');
     });
-  });
-
-  return scores;
-}
-
-function showResults() {
-  questionnaireSection.classList.add('hidden');
-  resultsSection.classList.remove('hidden');
-
-  const scores = calculateScores();
-
-  displayScores(scores);
-  displayChart(scores);
-  displayDominantProfile(scores);
-  displayDetailedDescriptions(scores);
-
-  const reliabilityWarning = document.getElementById('reliabilityWarning');
-  if (scores.motivationOfApproval > 7) {
-    reliabilityWarning.classList.remove('hidden');
-  }
-}
-
-function restartTest() {
-  currentQuestion = 0;
-  answers = [];
-  resultsSection.classList.add('hidden');
-  introSection.classList.remove('hidden');
-  progressFill.style.width = '0%';
-}
+});
